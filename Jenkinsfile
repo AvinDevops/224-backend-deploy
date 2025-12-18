@@ -21,6 +21,23 @@ pipeline {
                }
             }
         }
+        stage ('Init') {
+            steps {
+                sh """
+                cd terrafotm
+                terraform init
+                """
+            }
+        }
+        stage ('Plan') {
+            steps {
+                sh """
+                pwd
+                cd terrafotm
+                terraform plan -var="app_version=${params.appVersion}"
+                """
+            }
+        }
     }
     post {
         always {
